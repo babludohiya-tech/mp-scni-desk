@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta name="description" content="MP SCNI Desk — Calculate Ad-Valorem Court Fees and check Limitation periods for Section 138 NI Act cheque bounce cases under the Madhya Pradesh Court Fees (Amendment) Act, 2008." />
+  <meta name="theme-color" content="#0a0e1a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>MP SCNI Desk — Fee & Limitation Calculator</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-bg" aria-hidden="true"></div>
+
+  <!-- Toast notification -->
+  <div id="toast" class="toast" role="alert" aria-live="assertive"></div>
+
+  <div class="app-container">
+
+    <!-- ═══════ Header ═══════ -->
+    <header class="app-header">
+      <div class="header-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        Section 138 NI Act · Madhya Pradesh
+      </div>
+      <h1 class="app-title">MP SCNI Desk</h1>
+      <p class="app-subtitle">Fee & Limitation Calculator for Cheque Bounce Cases</p>
+    </header>
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 1 — COURT FEE CALCULATOR
+         ══════════════════════════════════════════════ -->
+    <section class="glass-card input-form" aria-label="Court Fee Calculator">
+      <div class="section-title">
+        <div class="section-icon section-icon--fee">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23"/>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <span>Court Fee Calculator</span>
+      </div>
+
+      <form id="feeForm" autocomplete="off">
+        <div class="form-grid">
+          <!-- Cheque Amount -->
+          <div class="field-group field-group--full">
+            <label class="field-label" for="chequeAmount">
+              <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+              Cheque Amount (₹)
+            </label>
+            <input
+              type="text"
+              id="chequeAmount"
+              class="field-input"
+              inputmode="decimal"
+              placeholder="e.g. 250000"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button type="submit" id="btnCalculateFee" class="btn-calculate">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="2" width="16" height="20" rx="2"/>
+              <line x1="8" y1="6" x2="16" y2="6"/>
+              <line x1="8" y1="10" x2="10" y2="10"/>
+              <line x1="14" y1="10" x2="16" y2="10"/>
+              <line x1="8" y1="14" x2="10" y2="14"/>
+              <line x1="14" y1="14" x2="16" y2="14"/>
+              <line x1="8" y1="18" x2="16" y2="18"/>
+            </svg>
+            Calculate Court Fee
+          </button>
+          <button type="button" id="btnClearFee" class="btn-clear">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 6h18"/>
+              <path d="M8 6V4h8v2"/>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
+              <line x1="10" y1="11" x2="10" y2="17"/>
+              <line x1="14" y1="11" x2="14" y2="17"/>
+            </svg>
+            Clear
+          </button>
+        </div>
+      </form>
+
+      <!-- Fee Result (inline below the button) -->
+      <div id="feeResultSection" class="result-section-inline" style="display:none;">
+        <div id="feeResult" class="result-card result-card--fee">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 2 — LIMITATION CHECKER (hidden until fee is calculated)
+         ══════════════════════════════════════════════ -->
+    <section id="limitationSection" class="glass-card input-form section-limitation" aria-label="Limitation Checker" style="display:none;">
+      <div class="section-title">
+        <div class="section-icon section-icon--limitation">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <span>Limitation Checker</span>
+      </div>
+
+      <form id="limitationForm" autocomplete="off">
+        <div class="form-grid">
+
+          <!-- Cheque Date -->
+          <div class="field-group">
+            <label class="field-label" for="chequeDate">
+              <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+              Cheque Date
+            </label>
+            <input type="text" id="chequeDate" class="field-input date-input" inputmode="numeric" placeholder="dd/mm/yyyy" maxlength="10" required />
+          </div>
+
+          <!-- Cheque Presentation Date -->
+          <div class="field-group">
+            <label class="field-label" for="chequePresentationDate">
+              <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                <polyline points="17 21 17 13 7 13 7 21"/>
+                <polyline points="7 3 7 8 15 8"/>
+              </svg>
+              Cheque Presentation Date
+            </label>
+            <input type="text" id="chequePresentationDate" class="field-input date-input" inputmode="numeric" placeholder="dd/mm/yyyy" maxlength="10" required />
+          </div>
+
+          <!-- Date of Dishonour -->
+          <div class="field-group">
+            <label class="field-label" for="dateDishonour">
+              <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+              Date of Dishonour
+            </label>
+            <input type="text" id="dateDishonour" class="field-input date-input" inputmode="numeric" placeholder="dd/mm/yyyy" maxlength="10" required />
+          </div>
+
+          <!-- Notice Dispatch Date -->
+          <div class="field-group">
+            <label class="field-label" for="noticeDispatch">
+              <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 2L11 13"/>
+                <path d="M22 2L15 22 11 13 2 9l20-7z"/>
+              </svg>
+              Notice Dispatch Date
+            </label>
+            <input type="text" id="noticeDispatch" class="field-input date-input" inputmode="numeric" placeholder="dd/mm/yyyy" maxlength="10" required />
+          </div>
+
+          <!-- Notice Delivery Date -->
+          <div class="field-group">
+            <label class="field-label" for="noticeDelivery">
+              <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              Notice Delivery Date
+            </label>
+            <input type="text" id="noticeDelivery" class="field-input date-input" inputmode="numeric" placeholder="dd/mm/yyyy" maxlength="10" required />
+          </div>
+
+          <!-- Case Filing Date -->
+          <div class="field-group">
+            <label class="field-label" for="filingDate">
+              <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+              Case Filing Date
+            </label>
+            <input type="text" id="filingDate" class="field-input date-input" inputmode="numeric" placeholder="dd/mm/yyyy" maxlength="10" required />
+          </div>
+
+        </div>
+
+        <div class="btn-row">
+          <button type="submit" id="btnCheckLimitation" class="btn-calculate btn-calculate--limitation">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            Check Limitation
+          </button>
+          <button type="button" id="btnClearLimitation" class="btn-clear">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 6h18"/>
+              <path d="M8 6V4h8v2"/>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
+              <line x1="10" y1="11" x2="10" y2="17"/>
+              <line x1="14" y1="11" x2="14" y2="17"/>
+            </svg>
+            Clear
+          </button>
+        </div>
+      </form>
+
+      <!-- Limitation Result (inline below the button) -->
+      <div id="limitationResultSection" class="result-section-inline" style="display:none;">
+        <div id="limitationResult" class="result-card result-card--limitation">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════ Footer ═══════ -->
+    <footer class="app-footer">
+      <div class="footer-divider"></div>
+      <p class="footer-text">
+        Calculations are based on the <strong>M.P. Court Fees Act</strong> and <strong>NI Act, 1881</strong>.<br/>
+        For official reference only. Not a substitute for legal advice.
+      </p>
+    </footer>
+
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    // Register Service Worker for PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
