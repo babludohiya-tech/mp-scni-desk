@@ -543,4 +543,115 @@ document.addEventListener('DOMContentLoaded', () => {
     showToast('Login feature coming soon!', 'info');
   });
 
+  // ── Print Report and Download PDF ──
+  const btnPrintReport = document.getElementById('btnPrintReport');
+  const btnDownloadPDF = document.getElementById('btnDownloadPDF');
+
+  function populatePrintableReport() {
+    // 1. Check if Court Fee has been calculated
+    const isFeeCalculated = feeResultSection.style.display !== 'none';
+    if (!isFeeCalculated) {
+      showToast('⚠️ Please calculate Court Fee before printing or exporting.', 'error');
+      return false;
+    }
+
+    // 2. Fetch court fee values
+    const chequeAmount = chequeAmountInput.value.trim();
+    // Get formatted cheque amount
+    const formattedChequeAmount = formatIndianNumber(parseFloat(chequeAmount.replace(/,/g, '')));
+    const courtFeeVal = feeCard.querySelector('.fee-value')?.textContent || 'N/A';
+    const slabVal = feeCard.querySelector('.fee-label')?.textContent || 'N/A';
+
+    // 3. Populate Court Fee fields in report
+    document.getElementById('printChequeAmount').textContent = formattedChequeAmount;
+    document.getElementById('printCourtFee').textContent = courtFeeVal;
+    
+    // Clean up slab description for report
+    const cleanSlab = slabVal.replace('Ad-Valorem Court Fee — ', '');
+    document.getElementById('printSlabClassification').textContent = cleanSlab;
+
+    // 4. Check if Limitation has been calculated
+    const isLimitationCalculated = (limitationSection.style.display !== 'none' && limitationResultSection.style.display !== 'none');
+    
+    if (isLimitationCalculated) {
+      document.getElementById('printLimitationTable').style.display = 'table';
+      document.getElementById('printChequeDate').textContent = chequeDateInput.value || 'N/A';
+      document.getElementById('printPresentationDate').textContent = chequePresentationInput.value || 'N/A';
+      document.getElementById('printDishonourDate').textContent = dateDishonourInput.value || 'N/A';
+      document.getElementById('printNoticeDispatchDate').textContent = noticeDispatchInput.value || 'N/A';
+      document.getElementById('printNoticeDeliveryDate').textContent = noticeDeliveryInput.value || 'N/A';
+      document.getElementById('printFilingDate').textContent = filingDateInput.value || 'N/A';
+      
+      const statusText = limitationCard.querySelector('.status-text')?.textContent || 'N/A';
+      const statusEl = document.getElementById('printLimitationStatus');
+      statusEl.textContent = statusText;
+      
+      // Color matching for print
+      if (statusText.includes('Within Limitation')) {
+        statusEl.style.color = '#16a34a'; // green
+      } else {
+        statusEl.style.color = '#dc2626'; // red
+      }
+    } else {
+      document.getElementById('printLimitationTable').style.display = 'none';
+    }
+
+    // 5. Timestamp
+    const currentDate = new Date().toLocaleDateString('en-IN', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+    document.getElementById('printTimestamp').textContent = currentDate;
+
+    return true;
+  }
+
+  btnPrintReport.addEventListener('click', () => {
+    if (populatePrintableReport()) {
+      window.print();
+    }
+  });
+
+  btnDownloadPDF.addEventListener('click', () => {
+    if (!populatePrintableReport()) return;
+
+    const element = document.getElementById('printableReport');
+    
+    // Set styles for html2pdf renderer
+    element.style.display = 'block';
+    element.style.position = 'absolute';
+    element.style.left = '-9999px';
+    element.style.top = '0';
+    element.classList.add('pdf-rendering');
+
+    showToast('Generating PDF...', 'success');
+
+    const opt = {
+      margin:       15,
+      filename:     'MP_Cheque_Bounce_Report.pdf',
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2, useCORS: true, logging: false },
+      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    // run html2pdf
+    html2pdf().set(opt).from(element).save().then(() => {
+      // Revert styles
+      element.style.display = 'none';
+      element.style.position = '';
+      element.style.left = '';
+      element.style.top = '';
+      element.classList.remove('pdf-rendering');
+      showToast('✓ PDF Downloaded', 'success');
+    }).catch(err => {
+      element.style.display = 'none';
+      element.style.position = '';
+      element.style.left = '';
+      element.style.top = '';
+      element.classList.remove('pdf-rendering');
+      showToast('❌ Failed to generate PDF', 'error');
+    });
+  });
+
 });

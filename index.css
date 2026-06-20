@@ -1303,3 +1303,213 @@ body {
   max-width: 320px;
   line-height: 1.4;
 }
+
+/* ---------- Print & PDF Button Styling ---------- */
+.btn-print,
+.btn-pdf {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 14px 20px;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-print svg,
+.btn-pdf svg {
+  width: 16px;
+  height: 16px;
+}
+
+.btn-print:hover {
+  color: var(--gold-400);
+  border-color: rgba(212, 175, 55, 0.4);
+  background: rgba(212, 175, 55, 0.08);
+}
+
+.btn-pdf:hover {
+  color: var(--blue-400);
+  border-color: var(--blue-border);
+  background: var(--blue-bg);
+}
+
+.btn-print:active,
+.btn-pdf:active {
+  transform: scale(0.97);
+}
+
+/* Responsive Button Row */
+@media (max-width: 600px) {
+  .btn-row {
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .btn-row button {
+    width: 100%;
+    margin-top: 0 !important;
+  }
+}
+
+/* ---------- Print & PDF Layout Styling ---------- */
+#printableReport {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 20mm;
+  }
+  body, html {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .app-container,
+  .top-nav-bar,
+  .ambient-bg,
+  .toast {
+    display: none !important;
+  }
+  #printableReport {
+    display: block !important;
+  }
+}
+
+/* Base styles for report (applied during print OR pdf rendering) */
+#printableReport,
+.pdf-rendering {
+  background: #ffffff !important;
+  color: #000000 !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.pdf-rendering {
+  display: block !important;
+  width: 210mm; /* A4 width */
+  min-height: 297mm; /* A4 height */
+  background: #ffffff !important;
+  color: #000000 !important;
+  position: absolute;
+  left: -9999px;
+  top: 0;
+}
+
+.pdf-rendering * {
+  color: #000000 !important;
+  background: transparent !important;
+}
+
+.print-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.print-header h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: 0.3px;
+  color: #000000;
+}
+
+.print-divider {
+  height: 2px;
+  background: #000000;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.case-details-section {
+  margin-bottom: 24px;
+  border: 1px solid #cbd5e1;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+}
+
+.placeholder-row {
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+  line-height: 1.4;
+  color: #000000;
+}
+
+.placeholder-row:last-child {
+  margin-bottom: 0;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+}
+
+.table-section-title {
+  background: #f1f5f9 !important;
+  color: #000000 !important;
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border: 1px solid #cbd5e1;
+  letter-spacing: 0.5px;
+}
+
+.report-table td {
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  font-size: 0.9rem;
+  color: #000000;
+}
+
+.label-cell {
+  width: 45%;
+  font-weight: 600;
+  background: #f8fafc !important;
+}
+
+.val-cell {
+  width: 55%;
+}
+
+.print-footer {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-size: 0.85rem;
+  color: #000000;
+}
+
+.footer-left {
+  font-size: 0.85rem;
+  color: #334155;
+}
+
+.footer-right {
+  text-align: center;
+  width: 250px;
+}
+
+.signature-line {
+  border-bottom: 1px dashed #000000;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.signature-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #000000;
+}

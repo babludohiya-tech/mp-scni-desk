@@ -1,8 +1,6 @@
-# Set Environment Variables
-# Use Android Studio's bundled JDK 21 (jbr) which is compatible with Gradle 8.14.3
-$env:JAVA_HOME = "C:\Program Files\Android\Android Studio\jbr"
+$env:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot"
 $env:ANDROID_HOME = "C:\Users\Reena\AppData\Local\Android\Sdk"
-$env:PATH = "C:\Program Files\nodejs;C:\Program Files\Android\Android Studio\jbr\bin;C:\Users\Reena\AppData\Local\Android\Sdk\platform-tools;C:\Users\Reena\AppData\Local\Android\Sdk\tools\bin;" + $env:PATH
+$env:PATH = "C:\Program Files\nodejs;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin;C:\Users\Reena\AppData\Local\Android\Sdk\platform-tools;C:\Users\Reena\AppData\Local\Android\Sdk\tools\bin;" + $env:PATH
 
 Write-Output "--- SYSTEM VERIFICATION ---"
 java -version
@@ -40,6 +38,7 @@ Copy-Item "icon-512.png" "www\" -Force
 Copy-Item "logo.png" "www\" -Force
 Copy-Item "acts.html" "www\" -Force
 Copy-Item "acts.js" "www\" -Force
+Copy-Item "html2pdf.bundle.min.js" "www\" -Force
 
 # 4. Install Capacitor Android platform
 Write-Output "Installing Capacitor Android platform..."

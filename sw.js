@@ -9,6 +9,7 @@ const ASSETS = [
   '/logo.png',
   '/acts.html',
   '/acts.js',
+  '/html2pdf.bundle.min.js',
 ];
 
 // Install — cache core assets
