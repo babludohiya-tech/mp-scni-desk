@@ -38,6 +38,8 @@ Copy-Item "sw.js" "www\" -Force
 Copy-Item "icon-192.png" "www\" -Force
 Copy-Item "icon-512.png" "www\" -Force
 Copy-Item "logo.png" "www\" -Force
+Copy-Item "acts.html" "www\" -Force
+Copy-Item "acts.js" "www\" -Force
 
 # 4. Install Capacitor Android platform
 Write-Output "Installing Capacitor Android platform..."

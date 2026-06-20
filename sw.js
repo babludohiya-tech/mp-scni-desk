@@ -7,6 +7,8 @@ const ASSETS = [
   '/app.js',
   '/manifest.json',
   '/logo.png',
+  '/acts.html',
+  '/acts.js',
 ];
 
 // Install — cache core assets

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta name="description" content="MP Cheque Bounce Desk — Browse and search Bharatiya Nyaya Sanhita (BNS) and Bharatiya Nagarik Suraksha Sanhita (BNSS) Bare Acts." />
+  <meta name="theme-color" content="#0a0e1a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Bare Acts (BNS & BNSS) — MP Cheque Bounce Desk</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="apple-touch-icon" href="logo.png" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-bg" aria-hidden="true"></div>
+
+  <!-- Toast notification -->
+  <div id="toast" class="toast" role="alert" aria-live="assertive"></div>
+
+  <!-- Top Navigation Bar with Back Button -->
+  <header class="top-nav-bar">
+    <div class="top-nav-container">
+      <a href="index.html" class="nav-back-btn" aria-label="Go back to Home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="back-icon">
+          <line x1="19" y1="12" x2="5" y2="12"/>
+          <polyline points="12 19 5 12 12 5"/>
+        </svg>
+        <span>Back</span>
+      </a>
+      <span class="top-nav-title">Bare Acts</span>
+      <div class="top-nav-logo-placeholder" style="width: 40px;"></div> <!-- balanced spacing -->
+    </div>
+  </header>
+
+  <div class="app-container">
+
+    <!-- Hero Title -->
+    <header class="app-header">
+      <div class="header-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+        </svg>
+        New Criminal Laws 2023
+      </div>
+      <h1 class="app-title">BNS & BNSS Directory</h1>
+      <p class="app-subtitle">Search and browse clauses of Bharatiya Nyaya Sanhita & Bharatiya Nagarik Suraksha Sanhita</p>
+    </header>
+
+    <!-- Act Selection Buttons -->
+    <section class="glass-card act-selection-section">
+      <div class="section-title">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <span>Select Bare Act</span>
+      </div>
+      <div class="act-btn-grid">
+        <button id="btnBNS" class="act-select-btn active-act">
+          <span class="act-btn-title">BNS 2023</span>
+          <span class="act-btn-desc">Bharatiya Nyaya Sanhita</span>
+        </button>
+        <button id="btnBNSS" class="act-select-btn">
+          <span class="act-btn-title">BNSS 2023</span>
+          <span class="act-btn-desc">Bharatiya Nagarik Suraksha Sanhita</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Search & Results Section -->
+    <section class="glass-card search-results-section">
+      <div class="search-bar-container">
+        <div class="search-input-wrapper">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="Search section number or keyword (e.g. Theft, Bail)..."
+            aria-label="Search Bare Act Sections"
+          />
+          <button id="clearSearchBtn" class="clear-search-btn" aria-label="Clear search" style="display: none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="search-header-row">
+        <span class="results-count" id="resultsCount">Showing all sections</span>
+      </div>
+
+      <!-- Results Cards Container -->
+      <div id="resultsContainer" class="results-cards-list">
+        <!-- Dynanically populated by acts.js -->
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-divider"></div>
+      <p class="footer-text disclaimer-text">
+        This directory is intended for informational purposes only. Court fees and limitation periods should be independently verified with applicable laws, court rules, and legal professionals...
+      </p>
+      <p class="footer-text">
+        Bharatiya Nyaya Sanhita (BNS) & Bharatiya Nagarik Suraksha Sanhita (BNSS) passed in 2023, replacing IPC & CrPC respectively.
+      </p>
+    </footer>
+
+  </div>
+
+  <script src="acts.js"></script>
+</body>
+</html>
