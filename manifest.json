@@ -1,6 +1,6 @@
 {
-  "name": "MP SCNI Desk",
-  "short_name": "SCNI Desk",
+  "name": "MP Cheque Bounce Desk",
+  "short_name": "Cheque Bounce Desk",
   "description": "Fee & Limitation Calculator for Cheque Bounce Cases (Section 138 NI Act) — Madhya Pradesh",
   "start_url": "/",
   "display": "standalone",

@@ -1,11 +1,12 @@
-// Service Worker for MP SCNI Desk — offline PWA support
-const CACHE_NAME = 'mp-scni-desk-v1';
+// Service Worker for MP Cheque Bounce Desk — offline PWA support
+const CACHE_NAME = 'mp-cheque-bounce-desk-v1';
 const ASSETS = [
   '/',
   '/index.html',
   '/index.css',
   '/app.js',
   '/manifest.json',
+  '/logo.png',
 ];
 
 // Install — cache core assets

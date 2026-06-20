@@ -181,10 +181,13 @@ body {
   user-select: none;
 }
 
-.top-nav-icon {
-  width: 20px;
-  height: 20px;
-  color: var(--gold-400);
+.top-nav-logo-img {
+  width: 28px;
+  height: 28px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.15);
 }
 
 .top-nav-title {

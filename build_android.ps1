@@ -37,18 +37,17 @@ Copy-Item "manifest.json" "www\" -Force
 Copy-Item "sw.js" "www\" -Force
 Copy-Item "icon-192.png" "www\" -Force
 Copy-Item "icon-512.png" "www\" -Force
+Copy-Item "logo.png" "www\" -Force
 
 # 4. Install Capacitor Android platform
 Write-Output "Installing Capacitor Android platform..."
 npm install @capacitor/android@latest
 
-# 5. Add the Android platform (re-create if directory is corrupted)
-if (Test-Path "android") {
-    Write-Output "Removing old Android native folder..."
-    Remove-Item -Recurse -Force "android" -ErrorAction SilentlyContinue
+# 5. Add the Android platform if it doesn't exist
+if (-not (Test-Path "android")) {
+    Write-Output "Adding Android native platform..."
+    npx cap add android
 }
-Write-Output "Adding Android native platform..."
-npx cap add android
 
 # 6. Copy web assets to Android project
 Write-Output "Syncing web assets to native project..."
@@ -61,8 +60,8 @@ cd android
 
 Write-Output "--- BUILD COMPLETED ---"
 if (Test-Path "app\build\outputs\apk\debug\app-debug.apk") {
-    Copy-Item "app\build\outputs\apk\debug\app-debug.apk" "..\mp-scni-desk.apk" -Force
-    Write-Output "APK successfully created at mp-scni-desk.apk"
+    Copy-Item "app\build\outputs\apk\debug\app-debug.apk" "..\mp-cheque-bounce-desk.apk" -Force
+    Write-Output "APK successfully created at mp-cheque-bounce-desk.apk"
 } else {
     Write-Error "Failed to build APK. Check the errors above."
 }
