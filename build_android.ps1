@@ -61,7 +61,8 @@ cd android
 
 Write-Output "--- BUILD COMPLETED ---"
 if (Test-Path "app\build\outputs\apk\debug\app-debug.apk") {
-    Write-Output "APK successfully created at android\app\build\outputs\apk\debug\app-debug.apk"
+    Copy-Item "app\build\outputs\apk\debug\app-debug.apk" "..\mp-scni-desk.apk" -Force
+    Write-Output "APK successfully created at mp-scni-desk.apk"
 } else {
     Write-Error "Failed to build APK. Check the errors above."
 }

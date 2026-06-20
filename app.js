@@ -503,4 +503,44 @@ document.addEventListener('DOMContentLoaded', () => {
     showToast('✓ Cleared', 'success');
   });
 
+  // ── Kebab Menu Dropdown ──
+  const kebabMenuBtn = document.getElementById('kebabMenuBtn');
+  const kebabDropdown = document.getElementById('kebabDropdown');
+  const menuLogin = document.getElementById('menuLogin');
+
+  function toggleDropdown() {
+    const isExpanded = kebabMenuBtn.getAttribute('aria-expanded') === 'true';
+    kebabMenuBtn.setAttribute('aria-expanded', !isExpanded);
+    kebabDropdown.classList.toggle('show');
+  }
+
+  function closeDropdown() {
+    kebabMenuBtn.setAttribute('aria-expanded', 'false');
+    kebabDropdown.classList.remove('show');
+  }
+
+  kebabMenuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleDropdown();
+  });
+
+  // Close when clicking dropdown items
+  kebabDropdown.querySelectorAll('.kebab-dropdown-item').forEach(item => {
+    item.addEventListener('click', () => {
+      closeDropdown();
+    });
+  });
+
+  // Close when clicking anywhere outside
+  document.addEventListener('click', (e) => {
+    if (!kebabMenuBtn.contains(e.target) && !kebabDropdown.contains(e.target)) {
+      closeDropdown();
+    }
+  });
+
+  // Login handler
+  menuLogin.addEventListener('click', () => {
+    showToast('Login feature coming soon!', 'info');
+  });
+
 });
