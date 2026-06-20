@@ -1,0 +1,26 @@
+{
+  "name": "mp-scni-desk",
+  "version": "1.0.0",
+  "description": "A professional web application for court staff and lawyers to calculate **Ad-Valorem Court Fees** and check **Limitation periods** for Cheque Bounce cases (Section 138 NI Act) under the Madhya Pradesh Court Fees (Amendment) Act, 2008.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/babludohiya-tech/mp-scni-desk.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/babludohiya-tech/mp-scni-desk/issues"
+  },
+  "homepage": "https://github.com/babludohiya-tech/mp-scni-desk#readme",
+  "dependencies": {
+    "@capacitor/android": "^8.4.1",
+    "@capacitor/cli": "^8.4.1",
+    "@capacitor/core": "^8.4.1"
+  }
+}
